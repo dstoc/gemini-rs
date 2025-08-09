@@ -11,6 +11,7 @@ use serde_json::Value;
 pub enum Role {
     User,
     Model,
+    Function,
 }
 
 #[derive(Debug, Deserialize)]
@@ -210,6 +211,8 @@ pub struct Part {
     pub function_call: Option<FunctionCall>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub thought: Option<bool>,
+    #[serde(rename = "functionResponse", skip_serializing_if = "Option::is_none")]
+    pub function_response: Option<FunctionResponse>,
 }
 
 impl Part {
@@ -620,9 +623,8 @@ pub struct FunctionResponse {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub id: Option<String>,
     pub name: String,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    //Optional. The function parameters and values in JSON object format.
-    pub args: Option<Value>,
+    // The function response in JSON object format.
+    pub response: Value,
 }
 
 /// Result of executing the [ExecutableCode]
