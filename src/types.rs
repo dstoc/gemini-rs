@@ -131,7 +131,7 @@ impl std::fmt::Display for Response {
 #[serde(rename_all = "camelCase")]
 pub struct UsageMetadata {
     pub prompt_token_count: u64,
-    pub candidates_token_count: u64,
+    pub candidates_token_count: Option<u64>,
 }
 
 /// A response candidate generated from the model
@@ -208,6 +208,8 @@ pub struct Part {
     pub code_execution_result: Option<CodeExecutionResult>,
     #[serde(rename = "functionCall", skip_serializing_if = "Option::is_none")]
     pub function_call: Option<FunctionCall>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub thought: Option<bool>,
 }
 
 impl Part {
